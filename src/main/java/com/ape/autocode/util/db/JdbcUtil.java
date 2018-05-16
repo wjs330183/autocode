@@ -14,7 +14,7 @@ import java.util.*;
 import static com.ape.autocode.util.db.DBConfig.*;
 
 /**
- * @auther qiys@hzzh.com
+ * @auther Json@hzzh.com
  * @date 2018-03-15
  */
 public class JdbcUtil {

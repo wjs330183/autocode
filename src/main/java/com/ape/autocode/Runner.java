@@ -12,7 +12,7 @@ import java.io.InputStream;
 import java.util.Properties;
 
 /**
- * @auther qiys@hzzh.com
+ * @auther Json@hzzh.com
  * @date 2018-03-16
  */
 public class Runner {

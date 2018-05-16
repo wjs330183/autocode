@@ -36,7 +36,6 @@ public class ${entityName}ServiceImpl implements ${entityName}Service {
     * 单个保存
     */
     @Override
-    @Stat
     @Transactional(rollbackFor = Exception.class)
     DataResult${'<String>'} save${entityName}(
 <#if columns??>
@@ -83,7 +82,6 @@ public class ${entityName}ServiceImpl implements ${entityName}Service {
     * 批量保存
     */
     @Override
-    @Stat
     @Transactional(rollbackFor = Exception.class)
     DataResult${'<Boolean>'} save${entityName}Batch (String ${entityName?uncap_first}Json, String operator){
         if(CommonUtils.isEmpty(${entityName?uncap_first}Json)){

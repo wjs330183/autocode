@@ -18,7 +18,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
- * @auther qiys@hzzh.com
+ * @auther Json@hzzh.com
  * @date 2018-03-15
  */
 public class CodeGenerator {

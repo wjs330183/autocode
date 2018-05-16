@@ -1,7 +1,7 @@
 package com.ape.autocode.util.db;
 
 /**
- * @auther qiys@hzzh.com
+ * @auther Json@hzzh.com
  * @date 2018-03-14
  */
 public class DBConfig {

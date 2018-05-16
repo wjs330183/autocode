@@ -2,7 +2,7 @@ package com.ape.autocode.entity;
 
 /**
  * 数据库字段封装类
- * Created by AngryApe at 2017/5/3.
+ * Created by Json at 2017/5/3.
  */
 public class ColumnMeta {
 
