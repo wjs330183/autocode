@@ -1,7 +1,7 @@
 <#include 'function.ftl'/>
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
-        "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+        "http://mybatis.apache.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="${package}.dao.${tableName}Dao">
 
     <resultMap id="resultMap" type="${package}.dto.${tableName}Entity">
@@ -17,59 +17,70 @@
         <#if columns??>
             <#list columns as column>
                 <#if column?is_last>
-        ${column.columnName}
+                    ${column.columnName}
                 <#else >
-        ${column.columnName},
+                    ${column.columnName},
                 </#if>
             </#list>
         </#if>
     </sql>
 
-    ${'<!-- single entity save -->'}
+${'<!-- single entity save -->'}
     <insert id="save">
         insert into
         <include refid="tableName"/>
-        (<include refid="columns"/>) values
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+        <#if columns??>
+            <#list columns as column>
+                 <if test="${column.fieldName} != null">
+                     ${column.columnName},
+                 </if>
+            </#list>
+        </#if>
+        </trim>
+        values
         (
         <#if columns??>
             <#list columns as column>
-                <#if column?is_last>
-            ${r'#{entity'+'.'+column.fieldName+'}'}
-                <#else >
-            ${r'#{entity'+'.'+column.fieldName+'}'},
-                </#if>
+                 <if test="${column.fieldName} != null">
+                     ${r'#{entity'+'.'+column.fieldName+'}'},
+                 </if>
             </#list>
         </#if>
         )
     </insert>
 
-    ${'<!-- mutipule entity save -->'}
+${'<!-- mutipule entity save -->'}
     <insert id="insertBatch">
         insert into
         <include refid="tableName"/>
-        (<include refid="columns"/>) values
-        <foreach collection="entities" open="(" close=")" item="entity" separator=",">
         (
+        <include refid="columns"/>
+        ) values
+        <foreach collection="entities" open="(" close=")" item="entity" separator=",">
+            (
             <#if columns??>
                 <#list columns as column>
                     <#if column?is_last>
-            ${r'#{entity'+'.'+column.fieldName+'}'}
+                        ${r'#{entity'+'.'+column.fieldName+'}'}
                     <#else >
-            ${r'#{entity'+'.'+column.fieldName+'}'},
+                        ${r'#{entity'+'.'+column.fieldName+'}'},
                     </#if>
                 </#list>
             </#if>
-        )
+            )
         </foreach>
     </insert>
 
 <#--为每个主键生成查询方法-->
 <#if keys??>
     <#list keys as key>
-    ${'<!-- get entity by '+key.fieldName+' -->'}
+        ${'<!-- get entity by '+key.fieldName+' -->'}
     <select id="getBy${key.fieldName?cap_first}" resultMap="resultMap">
-        select <include refid="columns"/>
-        from <include refid="tableName"/>
+        select
+        <include refid="columns"/>
+        from
+        <include refid="tableName"/>
         where ${key.fieldName} = ${r'#{'+key.fieldName+'}'}
         <#if queryDefault??>
         and ${queryDefault}
@@ -77,7 +88,8 @@
     </select>
 
     <update id="deleteBy${key.fieldName?cap_first}">
-        update <include refid="tableName"/>
+        update
+        <include refid="tableName"/>
         set ${deleteColumn}=${deleteValue}, ${updaterColumn}=${r'#{operator}'}
         where ${key.fieldName}=${r'#{'+key.fieldName+'}'}
         and ${deleteColumn}!=${deleteValue}
@@ -104,8 +116,10 @@
             </#if>
         </#list>
     <select id="getBy${methodName}" resultMap="resultMap">
-        select <include refid="columns"/>
-        from <include refid="tableName"/>
+        select
+        <include refid="columns"/>
+        from
+        <include refid="tableName"/>
         where ${params}
         <#if queryDefault??>
         and ${queryDefault}
@@ -113,8 +127,9 @@
     </select>
 
     <update id="deleteBy${methodName}">
-        update <include refid="tableName"/>
-        set ${deleteColumn}=${deleteValue}, ${updaterColumn}=${r'#{operator}'}
+        update
+        <include refid="tableName"/>
+        set ${deleteColumn}=${deleteValue}
         where ${params}
         and ${deleteColumn}!=${deleteValue}
     </update>
@@ -124,20 +139,20 @@
 
 <#--生成更新方法-->
 <#if keys??>
-${'<!-- update entity -->'}
+    ${'<!-- update entity -->'}
     <update id="update" parameterType="${package}.entity.${entityName}">
         update
         <include refid="tableName"/>
         set
         <#if columns??>
-        <#assign index = 0/>
+            <#assign index = 0/>
             <#list columns as column>
                 <#if !isColumnInKeys(column.columnName, keys)>
                     <#assign index = index+1/>
                     <#if index==(columns?size-keys?size!0)>
-            ${column.columnName} = ${r'#{entity'+'.'+column.fieldName+'}'}
+                        ${column.columnName} = ${r'#{entity'+'.'+column.fieldName+'}'}
                     <#else >
-            ${column.columnName} = ${r'#{entity'+'.'+column.fieldName+'}'},
+                        ${column.columnName} = ${r'#{entity'+'.'+column.fieldName+'}'},
                     </#if>
                 </#if>
             </#list>
@@ -159,8 +174,10 @@ ${'<!-- update entity -->'}
                 </#if>
             </#list>
     <select id="getBy${methodName}" resultMap="resultMap">
-        select <include refid="columns"/>
-        from <include refid="tableName"/>
+        select
+        <include refid="columns"/>
+        from
+        <include refid="tableName"/>
         where 1=1
         <#if queryDefault??>
         and ${queryDefault}

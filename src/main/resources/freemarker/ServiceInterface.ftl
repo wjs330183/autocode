@@ -31,7 +31,7 @@ public interface ${entityName}Service {
     ${paramComments}
     * @param operator 操作者编号
     */
-     DataResult${'<String>'}save${entityName}(${params} String operator);
+     ReqResult${'<String>'}save${entityName}(${params} String operator);
 </#if>
 
     /**
@@ -39,7 +39,7 @@ public interface ${entityName}Service {
     * @param ${entityName?uncap_first}Json 对象集合 Json 字符串
     * @param operator 操作者编号
     */
-    DataResult${'<Boolean>'} save${entityName}Batch(String ${entityName?uncap_first}Json, String operator);
+    ReqResult${'<Boolean>'} save${entityName}Batch(String ${entityName?uncap_first}Json, String operator);
 
 <#--为每个主键生成查询方法-->
 <#if keys??>
@@ -54,7 +54,7 @@ public interface ${entityName}Service {
     * 根据${key.fieldName}删除对象
     * @param ${key.fieldName} ${key.comment}
     */
-    DataResult${'<Integer>'} delete${entityName}By${key.fieldName?cap_first}(${key.javaType} ${key.fieldName}, String operator);
+    ReqResult${'<Integer>'} delete${entityName}By${key.fieldName?cap_first}(${key.javaType} ${key.fieldName}, String operator);
 
     </#list>
 </#if>
@@ -81,14 +81,14 @@ public interface ${entityName}Service {
         ${paramComments}
     * @param availData 是否是测试数据，0/1:否/是,默认为0
     */
-    DataResult<${entityName}> get${entityName}By${methodName} (${params}, int availData);
+    ReqResult<${entityName}> get${entityName}By${methodName} (${params}, int availData);
 
     /**
     * 根据${paramNames}删除对象
         ${paramComments}
     * @param operator 操作者编号
     */
-    DataResult${'<Integer>'} delete${entityName}By${methodName}(${params}, String operator);
+    ReqResult${'<Integer>'} delete${entityName}By${methodName}(${params}, String operator);
 
     </#if>
 </#if>
@@ -108,7 +108,7 @@ public interface ${entityName}Service {
     ${fieldComments}
     * @param operator 操作者编号
     */
-    DataResult${'<Boolean>'} update${entityName}(${fields});
+    ReqResult${'<Boolean>'} update${entityName}(${fields});
 </#if>
 
 <#--根据索引生成查询方法-->

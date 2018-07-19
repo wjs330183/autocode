@@ -7,7 +7,7 @@ import org.springframework.transaction.interceptor.TransactionAspectSupport;
 import javax.annotation.Resource;
 import com.ioe.stat.annotation.Stat;
 
-import com.ioe.common.domain.DataResult;
+import com.ioe.common.domain.ReqResult;
 import com.ioe.common.domain.ListResult;
 import com.ioe.common.domain.PageResult;
 import java.util.*;
@@ -37,7 +37,7 @@ public class ${entityName}ServiceImpl implements ${entityName}Service {
     */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    DataResult${'<String>'} save${entityName}(
+    ReqResult${'<String>'} save${entityName}(
 <#if columns??>
     <#assign index = 0/>
     <#list columns as column>
@@ -49,7 +49,7 @@ public class ${entityName}ServiceImpl implements ${entityName}Service {
             String operator
 </#if>
     ){
-        DataResult${'<String>'} result = new DataResult();
+        ReqResult${'<String>'} result = new ReqResult();
         if(false){
             result.setCode("1");
             result.setCode("1");
@@ -83,7 +83,7 @@ public class ${entityName}ServiceImpl implements ${entityName}Service {
     */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    DataResult${'<Boolean>'} save${entityName}Batch (String ${entityName?uncap_first}Json, String operator){
+    ReqResult${'<Boolean>'} save${entityName}Batch (String ${entityName?uncap_first}Json, String operator){
         if(CommonUtils.isEmpty(${entityName?uncap_first}Json)){
             result.setCode("1");
             result.setCode("1");
@@ -152,8 +152,8 @@ public class ${entityName}ServiceImpl implements ${entityName}Service {
     @Override
     @Stat
     @Transactional(rollbackFor = Exception.class)
-    public DataResult${'<Integer>'} delete${entityName}By${key.fieldName?cap_first}(${key.javaType} ${key.fieldName}, String operator){
-        DataResult${'<Integer>'} result = new DataResult();
+    public ReqResult${'<Integer>'} delete${entityName}By${key.fieldName?cap_first}(${key.javaType} ${key.fieldName}, String operator){
+        ReqResult${'<Integer>'} result = new ReqResult();
         <#if key.javaType=="String">
         if(CommonUtils.isEmpty(${key.fieldName})){
         <#else>
@@ -203,8 +203,8 @@ public class ${entityName}ServiceImpl implements ${entityName}Service {
     */
     @Override
     @Stat
-    public DataResult<${entityName}> get${entityName}By${methodName} (${params}, int availData){
-        DataResult<${entityName}> result = new DataResult();
+    public ReqResult<${entityName}> get${entityName}By${methodName} (${params}, int availData){
+        ReqResult<${entityName}> result = new ReqResult();
         // TODO: 数据校验
         //if(){
         //    result.setCode("1");
@@ -232,8 +232,8 @@ public class ${entityName}ServiceImpl implements ${entityName}Service {
     @Override
     @Stat
     @Transactional(rollbackFor = Exception.class)
-    public DataResult${'<Integer>'} delete${entityName}By${methodName}(${params}, String operator){
-        DataResult${'<Integer>'} result = new DataResult();
+    public ReqResult${'<Integer>'} delete${entityName}By${methodName}(${params}, String operator){
+        ReqResult${'<Integer>'} result = new ReqResult();
         // TODO: 数据校验
         //if(){
         //    result.setCode("1");
@@ -265,7 +265,7 @@ public class ${entityName}ServiceImpl implements ${entityName}Service {
     @Override
     @Stat
     @Transactional(rollbackFor = Exception.class)
-    DataResult${'<Boolean>'} update${entityName} (
+    ReqResult${'<Boolean>'} update${entityName} (
 <#if columns??>
     <#list columns as column>
         <#if !((sysColumns![])?seq_contains(column.columnName))>
@@ -275,7 +275,7 @@ public class ${entityName}ServiceImpl implements ${entityName}Service {
 </#if>
                 String operator
     ){
-        DataResult${'<Boolean>'} result = new DataResult();
+        ReqResult${'<Boolean>'} result = new ReqResult();
         if(false){
             result.setCode("1");
             result.setCode("1");

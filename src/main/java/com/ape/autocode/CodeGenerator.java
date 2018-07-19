@@ -154,6 +154,8 @@ public class CodeGenerator {
             resultSet = metaData.getIndexInfo(null, null, tableName, false, false);
             List<IndexMeta> indexes = JdbcUtil.parseIndexes(tableName, resultSet, columns);
             indexes.forEach(System.out::println);
+//            tableName = tableName.substring(2, tableName.length());
+//            entityName = entityName.substring(1, entityName.length());
             // 构造 freemarker 变量
             Map<String, Object> dataMap = new HashMap<>();
             dataMap.put("package", packageName);    //文件包名
