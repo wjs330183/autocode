@@ -48,7 +48,7 @@ public class JdbcUtil {
                 String remarks = res.getString("REMARKS").replace("\r\n", "\t");
                 //截取掉前缀“t_xxx_”
                 String entityName = JdbcUtil
-                        .parseCamelNameInitUpper(tableName.substring(tableName.indexOf('_', 2) + 1));
+                        .parseCamelNameInitUpper(tableName.substring(tableName.indexOf('_', 1) + 1));
                 TableMeta table = new TableMeta(tableName, entityName, remarks);
                 tableMetas.add(table);
             }
