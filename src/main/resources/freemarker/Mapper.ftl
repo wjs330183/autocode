@@ -143,20 +143,15 @@ ${'<!-- mutipule entity save -->'}
     <update id="update" parameterType="${package}.entity.${entityName}">
         update
         <include refid="tableName"/>
-        set
+        <set>
         <#if columns??>
-            <#assign index = 0/>
             <#list columns as column>
-                <#if !isColumnInKeys(column.columnName, keys)>
-                    <#assign index = index+1/>
-                    <#if index==(columns?size-keys?size!0)>
-                        ${column.columnName} = ${r'#{entity'+'.'+column.fieldName+'}'}
-                    <#else >
-                        ${column.columnName} = ${r'#{entity'+'.'+column.fieldName+'}'},
-                    </#if>
-                </#if>
+                 <if test="${column.fieldName} != null">
+                     ${column.columnName} = ${r'#{entity'+'.'+column.fieldName+'}'},
+                 </if>
             </#list>
         </#if>
+        </set>
         where ${updateSql} and ${deleteColumn}!=${deleteValue}
     </update>
 </#if>
